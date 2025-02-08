@@ -205,6 +205,9 @@ def hook_for_data_collection(env, action):
     obs.trajectory.append(action)
     # z-coordinates for plotting z vs. timesteps
     obs.hc_z.append(pb.getLinkState(env.robot_id, env.joint_index['head_cam'], computeLinkVelocity=1)[0][2]) # getLinkState()[0] is (x,y,z)
+    # relative positions
+    states = pb.getLinkStates(env.robot_id, range(len(env.joint_index)), computeLinkVelocity=1)
+    obs.pos.append(np.array([state[0] for state in states]))
 
 
 if __name__ == "__main__":
